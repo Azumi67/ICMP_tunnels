@@ -18,19 +18,38 @@
 - پنل شما در خارج باید نصب شده باشد
 - مناسب برای وایرگارد و V2ray و Openvpn
 - لطفا اگر تنها برای یک کانفیگ میخواهید، تانل را انجام دهید تعداد کانفیگ خود را به درستی وارد نمایید.
+- لطفا برای کانفیگ دوباره، نحست از منوی uninstall اقدام به حذف تانل یا پورت فوروارد ها کنید تا مشکلی پیش نیاید.
 - برای راحتی شما تعدادی از پورت ها به صورت دیفالت انتخاب شده است
-- در آخر خر کانفیگ ایپی 4 سرور ایران شما با پورت نهایی نمایش داده میشود که با استفاده از آن در کلاینت وایرگارد یا V2ray میتوانید به اینترنت متصل شوید.
+- در آخر هر کانفیگ ایپی 4 سرور ایران شما با پورت نهایی نمایش داده میشود که با استفاده از آن در کلاینت وایرگارد یا V2ray میتوانید به اینترنت متصل شوید.
 
 ------------------------
+![307981](https://github.com/Azumi67/V2ray_loadbalance_multipleServers/assets/119934376/39b2794b-fd04-4ae5-baea-d4b66138766e)
+ **فهرست :**
 
-![R (a2)](https://github.com/Azumi67/RTT-Wireguard/assets/119934376/3f64bfa8-3785-4a0b-beba-366b3cb73719)
-**دسترسی سریع به اسکریپت**
 
+ ----------------------
 
-- [کلیک - click]()
+- **دسترسی سریع به اسکریپت** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%85%D9%86)**
+- **امکانات** >> **[کلیک]()**
+- **آموزش** >> **[کلیک](https://github.com/Azumi67/V2ray_loadbalance_multipleServers#%D8%A2%D9%85%D9%88%D8%B2%D8%B4)**
+- **تانل Pingtunnel با IPV4 و TCP - تک پورت** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-pingtunnel-%D8%A8%D8%A7-ipv4-%D9%88-tcp---%D8%AA%DA%A9-%D9%BE%D9%88%D8%B1%D8%AA)**
+-  **تانل Pingtunnel با IPV4 و TCP - مولتی پورت** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-pingtunnel-%D8%A8%D8%A7-ipv4-%D9%88-tcp---%D9%85%D9%88%D9%84%D8%AA%DB%8C-%D9%BE%D9%88%D8%B1%D8%AA)**
+-  **تانل Pingtunnel با IPV6 و TCP - مولتی پورت** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-pingtunnel-%D8%A8%D8%A7-ipv6-%D9%88-tcp---%D9%85%D9%88%D9%84%D8%AA%DB%8C-%D9%BE%D9%88%D8%B1%D8%AA)**
+- **تانل Pingtunnel با IPV4 و UDP - تک پورت** >>  **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-pingtunnel-%D8%A8%D8%A7-ipv4-%D9%88-udp---%D8%AA%DA%A9-%D9%BE%D9%88%D8%B1%D8%AA)**
+- **تانل Pingtunnel با IPV6 و UDP - تک پورت**  >>  **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-pingtunnel-%D8%A8%D8%A7-ipv6-%D9%88-udp---%D8%AA%DA%A9-%D9%BE%D9%88%D8%B1%D8%AA)**
+- **تانل Icmptunnel همراه با Socat UDP - تک پورت**  >>  **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-icmptunnel-%D9%87%D9%85%D8%B1%D8%A7%D9%87-%D8%A8%D8%A7-socat-udp---%D8%AA%DA%A9-%D9%BE%D9%88%D8%B1%D8%AA)**
+- **تانل HANS همراه با Socat TCP - تک پورت**  >>  **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-hans-%D9%87%D9%85%D8%B1%D8%A7%D9%87-%D8%A8%D8%A7-socat-tcp---%D8%AA%DA%A9-%D9%BE%D9%88%D8%B1%D8%AA)**
+- **تانل HANS همراه با Haproxy TCP - مولتی پورت**  >>  **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-hans-%D9%87%D9%85%D8%B1%D8%A7%D9%87-%D8%A8%D8%A7-haproxy-tcp---%D9%85%D9%88%D9%84%D8%AA%DB%8C-%D9%BE%D9%88%D8%B1%D8%AA)**
+- **تانل HANS همراه با ریورس تانل FRP - مولتی پورت - TCP**  >>  **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-hans-%D9%87%D9%85%D8%B1%D8%A7%D9%87-%D8%A8%D8%A7-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-%D8%AA%D8%A7%D9%86%D9%84-frp---%D9%85%D9%88%D9%84%D8%AA%DB%8C-%D9%BE%D9%88%D8%B1%D8%AA---tcp)**
+- **تانل Icmptunnel همراه با ریورس تانل FRP - مولتی پورت - UDP**  >>  **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-icmptunnel-%D9%87%D9%85%D8%B1%D8%A7%D9%87-%D8%A8%D8%A7-%D8%B1%DB%8C%D9%88%D8%B1%D8%B3-%D8%AA%D8%A7%D9%86%D9%84-frp---%D9%85%D9%88%D9%84%D8%AA%DB%8C-%D9%BE%D9%88%D8%B1%D8%AA---udp)**
+     
+     
+     
+
 ------------------------
 ![check](https://github.com/Azumi67/PrivateIP-Tunnel/assets/119934376/13de8d36-dcfe-498b-9d99-440049c0cf14)
 **امکانات**
+-
 
 - تانل ICMP با سه روش متفاوت و امکان استفاده هم زمان از پورت فوروارد و تانل ریورس FRP
 - پشتیبانی از TCP و UDP
