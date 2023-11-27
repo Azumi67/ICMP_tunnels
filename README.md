@@ -30,8 +30,8 @@
  ----------------------
 
 - **دسترسی سریع به اسکریپت** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%A7%D8%B3%DA%A9%D8%B1%DB%8C%D9%BE%D8%AA-%D9%85%D9%86)**
-- **امکانات** >> **[کلیک]()**
-- **آموزش** >> **[کلیک](https://github.com/Azumi67/V2ray_loadbalance_multipleServers#%D8%A2%D9%85%D9%88%D8%B2%D8%B4)**
+- **امکانات** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels/tree/main#%D8%A7%D9%85%DA%A9%D8%A7%D9%86%D8%A7%D8%AA)**
+- **آموزش** : 
 - **تانل Pingtunnel با IPV4 و TCP - تک پورت** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-pingtunnel-%D8%A8%D8%A7-ipv4-%D9%88-tcp---%D8%AA%DA%A9-%D9%BE%D9%88%D8%B1%D8%AA)**
 -  **تانل Pingtunnel با IPV4 و TCP - مولتی پورت** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-pingtunnel-%D8%A8%D8%A7-ipv4-%D9%88-tcp---%D9%85%D9%88%D9%84%D8%AA%DB%8C-%D9%BE%D9%88%D8%B1%D8%AA)**
 -  **تانل Pingtunnel با IPV6 و TCP - مولتی پورت** >> **[کلیک](https://github.com/Azumi67/ICMP_tunnels#%D8%AA%D8%A7%D9%86%D9%84-pingtunnel-%D8%A8%D8%A7-ipv6-%D9%88-tcp---%D9%85%D9%88%D9%84%D8%AA%DB%8C-%D9%BE%D9%88%D8%B1%D8%AA)**
