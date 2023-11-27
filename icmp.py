@@ -429,12 +429,31 @@ def uni_menu():
             break
         else:
             print('Invalid choice.')
-			
+		
+
+def reset_icmp():
+    try:
+        reset_ipv4 = False
+        reset_ipv6 = False
+
+        os.system("sysctl -w net.ipv4.icmp_echo_ignore_all=0")
+        reset_ipv4 = True
+
+        os.system("sudo sysctl -w net.ipv6.icmp.echo_ignore_all=0")
+        reset_ipv6 = True
+
+        if reset_ipv4 or reset_ipv6:
+            display_checkmark("\033[92mICMP has been reset to default!\033[0m")
+        else:
+            display_notification("\033[93mICMP settings has been reset.\033[0m")
+    except Exception as e:
+        display_error("\033[91mAn error occurred: {}\033[0m".format(str(e)))
+	    
 def remove_ping():
     os.system("clear")
     display_notification("\033[93mRemoving Pingtunnels ...\033[0m")
     print("\033[93m╭───────────────────────────────────────╮\033[0m")
-
+    reset_icmp()
     try:
         if subprocess.call("test -f /root/pingtunnel", shell=True) == 0:
             subprocess.run("rm /root/pingtunnel", shell=True)
@@ -543,7 +562,7 @@ def remove_hans():
     os.system("clear")
     display_notification("\033[93mRemoving Hans ...\033[0m")
     print("\033[93m╭───────────────────────────────────────╮\033[0m")
-
+    reset_icmp()
     try:
         if subprocess.call("test -f /etc/hans.sh", shell=True) == 0:
             subprocess.run("rm /etc/hans.sh", shell=True)
@@ -592,7 +611,7 @@ def remove_hans_tcp():
     os.system("clear")
     display_notification("\033[93mRemoving Hans + FRP ...\033[0m")
     print("\033[93m╭───────────────────────────────────────╮\033[0m")
-
+    reset_icmp()
     try:
         if subprocess.call("test -f /etc/hans.sh", shell=True) == 0:
             subprocess.run("rm /etc/hans.sh", shell=True)
@@ -648,7 +667,7 @@ def remove_icmp():
     os.system("clear")
     display_notification("\033[93mRemoving icmptunnel...\033[0m")
     print("\033[93m╭───────────────────────────────────────╮\033[0m")
-
+    reset_icmp()
     try:
         subprocess.run("crontab -l | grep -v \"@reboot /bin/bash /etc/icmp.sh\" | crontab -", shell=True)
         subprocess.run("ip link set dev tun0 down > /dev/null", shell=True)
@@ -683,7 +702,7 @@ def remove_icmp_tcp():
     os.system("clear")
     display_notification("\033[93mRemoving FRP + icmptunnel...\033[0m")
     print("\033[93m╭───────────────────────────────────────╮\033[0m")
-
+    reset_icmp()
     try:
         subprocess.run("crontab -l | grep -v \"@reboot /bin/bash /etc/icmp.sh\" | crontab -", shell=True)
 
@@ -1057,9 +1076,6 @@ def frp_menu():
         display_error("\033[91mInstallation process interrupted.\033[0m")
         exit(1)
 
-    subprocess.call('sysctl -w net.ipv4.ip_forward=1 &>/dev/null', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.call('sysctl -w net.ipv6.conf.all.forwarding=1 &>/dev/null', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
     with open('/etc/resolv.conf', 'w') as resolv_file:
         resolv_file.write("nameserver 8.8.8.8\n")
 
@@ -1273,8 +1289,11 @@ def hanss_install_menu():
     display_loading()
     subprocess.run(["echo", "'nameserver 8.8.8.8'", ">", "/etc/resolv.conf"], stderr=subprocess.DEVNULL, check=True, shell=True)
 
-    with open("/etc/sysctl.conf", "a") as sysctl_conf:
-        sysctl_conf.write("net.ipv4.ip_forward=1\n")
+
+    ipv4_forward_status = subprocess.run(["sysctl", "-n", "net.ipv4.ip_forward"], capture_output=True, text=True)
+    if int(ipv4_forward_status.stdout) != 1:
+        subprocess.run(["sysctl", "net.ipv4.ip_forward=1"])
+
     subprocess.run(["sysctl", "-p"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
     subprocess.run(["wget", "https://sourceforge.net/projects/hanstunnel/files/source/hans-1.1.tar.gz"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
@@ -1426,11 +1445,9 @@ def install_icmp():
     subprocess.run(['sudo', 'tee', '/etc/resolv.conf'], input='nameserver 8.8.8.8\n', capture_output=True, text=True)
 
 
-    subprocess.run(['sudo', 'sysctl', '-w', 'net.ipv4.ip_forward=1'], capture_output=True)
-
-
-    subprocess.run(['sudo', 'sysctl', '-w', 'net.ipv6.conf.all.forwarding=1'], capture_output=True)
-
+    ipv4_forward_status = subprocess.run(["sysctl", "-n", "net.ipv4.ip_forward"], capture_output=True, text=True)
+    if int(ipv4_forward_status.stdout) != 1:
+        subprocess.run(["sysctl", "net.ipv4.ip_forward=1"])
 
     if os.path.exists("/root/icmptunnel"):
         shutil.rmtree("/root/icmptunnel")
@@ -2321,13 +2338,24 @@ def pingtunnel_menu():
             print('Invalid choice.')  
             
 def ignore():
-    subprocess.run(["sudo", "sh", "-c", "echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all"])
-    subprocess.run(["sudo", "sh", "-c", "echo 1 > /proc/sys/net/ipv6/icmp/echo_ignore_all"])
+    icmpv4_status = subprocess.run(["sysctl", "net.ipv4.icmp_echo_ignore_all"], capture_output=True, text=True)
+    if "net.ipv4.icmp_echo_ignore_all = 1" not in icmpv4_status.stdout:
+        subprocess.run(["sudo", "sh", "-c", "echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all"])
+
+    icmpv6_status = subprocess.run(["sysctl", "net.ipv6.conf.all.accept_redirects"], capture_output=True, text=True)
+    if "net.ipv6.conf.all.accept_redirects = 0" not in icmpv6_status.stdout:
+        subprocess.run(["sudo", "sh", "-c", "echo 0 > /proc/sys/net/ipv6/conf/all/accept_redirects"])
+        subprocess.run(["sudo", "sh", "-c", "echo 1 > /proc/sys/net/ipv6/conf/all/icmpv6_echo_ignore_all"])
+
+    ipv4_forward_status = subprocess.run(["sysctl", "net.ipv4.ip_forward"], capture_output=True, text=True)
+    if "net.ipv4.ip_forward = 0" not in ipv4_forward_status.stdout:
+        subprocess.run(["sudo", "sysctl", "-w", "net.ipv4.ip_forward=1"])
+
+    ipv6_forward_status = subprocess.run(["sysctl", "net.ipv6.conf.all.forwarding"], capture_output=True, text=True)
+    if "net.ipv6.conf.all.forwarding = 0" not in ipv6_forward_status.stdout:
+        subprocess.run(["sudo", "sysctl", "-w", "net.ipv6.conf.all.forwarding=1"])
 
     subprocess.run(["sudo", "sh", "-c", "echo 'nameserver 8.8.8.8' > /etc/resolv.conf"])
-
-    subprocess.run(["sudo", "sysctl", "-w", "net.ipv4.ip_forward=1"])
-    subprocess.run(["sudo", "sysctl", "-w", "net.ipv6.conf.all.forwarding=1"])
 
 def install_pingtunnel():
     display_notification("\033[93mInstalling PingTunnel ...\033[0m")
@@ -2400,7 +2428,7 @@ def ipv4_kharej():
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
-
+    ignore()
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     local_ports = []
 
@@ -2439,7 +2467,7 @@ def ipv6_kharej():
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
-
+    ignore()
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     local_ports = []
 
@@ -2515,7 +2543,7 @@ def udp_ipv4_iran():
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
     print("\033[93m──────────────────────────────────────────────────\033[0m")
-
+    ignore()
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     i = 0 
     
@@ -2602,6 +2630,7 @@ def udp_ipv6_iran():
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
     print("\033[93m──────────────────────────────────────────────────\033[0m")
+    ignore()
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     i = 0 
     
@@ -2691,7 +2720,7 @@ def tcp_ipv4_iran():
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
-
+    ignore()
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     i = 0  
 
@@ -2777,6 +2806,7 @@ def tcp_ipv6_iran():
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
     print("\033[93m──────────────────────────────────────────────────\033[0m")
+    ignore()
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     i = 0 
     if num_configs == 1:
