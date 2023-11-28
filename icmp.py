@@ -2559,7 +2559,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key}
+ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -nolog 0 -noprint 0
 Restart=always
 
 [Install]
@@ -2598,7 +2598,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key}
+ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key}  -nolog 0 -noprint 0
 Restart=always
 
 [Install]
@@ -2647,7 +2647,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {[server_subdomain2]}:{server_port} -key {key}
+ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {[server_subdomain2]}:{server_port} -key {key} -nolog 0 -noprint 0
 Restart=always
 
 [Install]
@@ -2688,7 +2688,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key}
+ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -nolog 0 -noprint 0
 Restart=always
 
 [Install]
@@ -2736,7 +2736,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key}
+ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -nolog 0 -noprint 0
 Restart=always
 
 [Install]
@@ -2774,7 +2774,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key}
+ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -nolog 0 -noprint 0
 Restart=always
 
 [Install]
@@ -2822,7 +2822,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {[server_subdomain2]}:{server_port} -tcp 1 -key {key}
+ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {[server_subdomain2]}:{server_port} -tcp 1 -key {key} -nolog 0 -noprint 0
 Restart=always
 
 [Install]
@@ -2863,7 +2863,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key}
+ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key}  -nolog 0 -noprint 0
 Restart=always
 
 [Install]
