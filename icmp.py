@@ -2342,10 +2342,9 @@ def ignore():
     if "net.ipv4.icmp_echo_ignore_all = 1" not in icmpv4_status.stdout:
         subprocess.run(["sudo", "sh", "-c", "echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all"])
 
-    icmpv6_status = subprocess.run(["sysctl", "net.ipv6.conf.all.accept_redirects"], capture_output=True, text=True)
-    if "net.ipv6.conf.all.accept_redirects = 0" not in icmpv6_status.stdout:
-        subprocess.run(["sudo", "sh", "-c", "echo 0 > /proc/sys/net/ipv6/conf/all/accept_redirects"])
-        subprocess.run(["sudo", "sh", "-c", "echo 1 > /proc/sys/net/ipv6/conf/all/icmpv6_echo_ignore_all"])
+    icmpv6_status = subprocess.run(["sysctl", "net.ipv6.icmp.echo_ignore_all"], capture_output=True, text=True)
+    if "net.ipv6.icmp.echo_ignore_all = 0" not in icmpv6_status.stdout:
+        subprocess.run(["sudo", "sysctl", "-w", "net.ipv6.icmp.echo_ignore_all=1"])
 
     ipv4_forward_status = subprocess.run(["sysctl", "net.ipv4.ip_forward"], capture_output=True, text=True)
     if "net.ipv4.ip_forward = 0" not in ipv4_forward_status.stdout:
