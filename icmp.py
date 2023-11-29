@@ -1103,7 +1103,6 @@ def frp_menu():
         display_error(f"An error occurred while moving frp: {str(e)}")
         return
 
-    subprocess.call('sysctl -p &>/dev/null', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     display_checkmark("\033[92mIP forward enabled!\033[0m")
     display_loading()
@@ -1271,14 +1270,13 @@ def hanss_install_menu():
     display_notification("\033[93mInstalling \033[92mHans\033[93m ...\033[0m")
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     display_loading()
+    
     subprocess.run(["echo", "'nameserver 8.8.8.8'", ">", "/etc/resolv.conf"], stderr=subprocess.DEVNULL, check=True, shell=True)
-
 
     ipv4_forward_status = subprocess.run(["sysctl", "-n", "net.ipv4.ip_forward"], capture_output=True, text=True)
     if int(ipv4_forward_status.stdout) != 1:
         subprocess.run(["sysctl", "net.ipv4.ip_forward=1"])
 
-    subprocess.run(["sysctl", "-p"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
     subprocess.run(["wget", "https://sourceforge.net/projects/hanstunnel/files/source/hans-1.1.tar.gz"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     subprocess.run(["tar", "-xzf", "hans-1.1.tar.gz"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
