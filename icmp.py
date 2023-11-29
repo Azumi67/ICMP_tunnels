@@ -458,10 +458,6 @@ def remove_ping():
         if subprocess.call("test -f /root/pingtunnel", shell=True) == 0:
             subprocess.run("rm /root/pingtunnel", shell=True)
 
-        subprocess.run("systemctl stop haproxy > /dev/null 2>&1", shell=True)
-
-        time.sleep(1)
-
         pingtunnel_services = ["kharej-pingtunnel", "iran-pingtunnel"]  
 
         num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
@@ -802,9 +798,6 @@ def restart_hap():
     try:
         subprocess.run("systemctl daemon-reload", shell=True)
         subprocess.run("systemctl restart haproxy.service > /dev/null 2>&1", shell=True)
-        time.sleep(1)
-        subprocess.run("systemctl restart haproxy.service > /dev/null 2>&1", shell=True)
-        time.sleep(1)
 
 
         print("Progress: ", end="")
@@ -833,9 +826,6 @@ def stop_hap():
     try:
         subprocess.run("systemctl daemon-reload", shell=True)
         subprocess.run("systemctl stop haproxy.service > /dev/null 2>&1", shell=True)
-        time.sleep(1)
-        subprocess.run("systemctl stop haproxy.service > /dev/null 2>&1", shell=True)
-        time.sleep(1)
 
 
         print("Progress: ", end="")
@@ -864,9 +854,6 @@ def restart_socat():
     try:
         subprocess.run("systemctl daemon-reload", shell=True)
         subprocess.run("systemctl restart portforwarding.service > /dev/null 2>&1", shell=True)
-        time.sleep(1)
-        subprocess.run("systemctl restart portforwarding.service > /dev/null 2>&1", shell=True)
-        time.sleep(1)
 
 
         print("Progress: ", end="")
@@ -895,9 +882,6 @@ def stop_socat():
     try:
         subprocess.run("systemctl daemon-reload", shell=True)
         subprocess.run("systemctl stop portforwarding.service > /dev/null 2>&1", shell=True)
-        time.sleep(1)
-        subprocess.run("systemctl stop portforwarding.service > /dev/null 2>&1", shell=True)
-        time.sleep(1)
 
 
         print("Progress: ", end="")
