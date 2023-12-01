@@ -15,6 +15,7 @@
 #
 # Disclaimer:
 # This script comes with no warranties or guarantees. Use it at your own risk.
+import platform
 import sys
 import os
 import time
@@ -2347,12 +2348,18 @@ def install_pingtunnel():
     
     subprocess.run(["sudo", "apt", "install", "wget", "zip", "-y"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     
-    subprocess.run(["wget", "-O", "pingtunnel_linux_amd64.zip", "https://github.com/Azumi67/pingtunnel/releases/download/pingtunnel/pingtunnel_linux_amd64.zip"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    arch = platform.machine()
+    if 'aarch64' in arch:
+        download_link = "https://github.com/Azumi67/pingtunnel/releases/download/2.8/pingtunnel_linux_arm64.zip"
+    else:
+        download_link = "https://github.com/Azumi67/pingtunnel/releases/download/2.8/pingtunnel_linux_amd64.zip"
+        
+    subprocess.run(["wget", "-O", "pingtunnel.zip", download_link], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     
     i = 0
     while True:
         time.sleep(0.5)
-        if os.path.exists("pingtunnel_linux_amd64.zip"):
+        if os.path.exists("pingtunnel.zip"):
             break
         i += 1
         loading_bar = "[" + "=" * i + " " * (10 - i) + "]"
@@ -2360,10 +2367,10 @@ def install_pingtunnel():
     
     display_checkmark("\033[92mPingtunnel downloaded!\033[0m")
     
-    subprocess.run(["sudo", "unzip", "pingtunnel_linux_amd64.zip"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(["sudo", "unzip", "pingtunnel.zip"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     display_checkmark("\033[92mPingtunnel installed!\033[0m")
     
-    os.remove("pingtunnel_linux_amd64.zip")
+    os.remove("pingtunnel.zip")
     pass
 
 def kharej_ping():
