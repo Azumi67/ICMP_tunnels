@@ -1156,8 +1156,8 @@ After=network.target
 
 [Service]
 ExecStart=/root/frp/./frps -c {frps_path}
-Restart=on-failure
-RestartSec=3s
+Restart=always
+RestartSec=21600
 User=root
 
 [Install]
@@ -1226,6 +1226,7 @@ def kharej_tcp_menu():
         f.write("[Service]\n")
         f.write("ExecStart=/root/frp/./frpc -c /root/frp/frpc.toml\n")
         f.write("Restart=always\n")
+        f.write("RestartSec=21600\n")
         f.write("User=root\n")
         f.write("\n")
         f.write("[Install]\n")
@@ -1509,6 +1510,7 @@ def kharejj_tcp_menu():
         f.write("[Service]\n")
         f.write("ExecStart=/root/frp/./frpc -c /root/frp/frpc.toml\n")
         f.write("Restart=always\n")
+        f.write("RestartSec=21600\n") 
         f.write("User=root\n")
         f.write("\n")
         f.write("[Install]\n")
@@ -1662,8 +1664,8 @@ After=network.target
 
 [Service]
 ExecStart=/root/frp/./frps -c {frps_path}
-Restart=on-failure
-RestartSec=3s
+Restart=always
+RestartSec=21600
 User=root
 
 [Install]
@@ -1732,6 +1734,7 @@ def kharej_udp_menu():
         f.write("[Service]\n")
         f.write("ExecStart=/root/frp/./frpc -c /root/frp/frpc.toml\n")
         f.write("Restart=always\n")
+        f.write("RestartSec=21600\n")
         f.write("User=root\n")
         f.write("\n")
         f.write("[Install]\n")
@@ -1942,6 +1945,7 @@ def kharejj_udp_menu():
         f.write("[Service]\n")
         f.write("ExecStart=/root/frp/./frpc -c /root/frp/frpc.toml\n")
         f.write("Restart=always\n")
+        f.write("RestartSec=21600\n")   
         f.write("User=root\n")
         f.write("\n")
         f.write("[Install]\n")
