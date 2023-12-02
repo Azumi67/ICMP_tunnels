@@ -2723,7 +2723,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 2000
+ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
 Restart=always
 
 [Install]
@@ -2761,7 +2761,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 2000
+ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
 Restart=always
 
 [Install]
@@ -2809,7 +2809,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {[server_subdomain2]}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 2000
+ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {[server_subdomain2]}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
 Restart=always
 
 [Install]
@@ -2850,7 +2850,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 2000
+ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
 
 [Install]
 WantedBy=multi-user.target
