@@ -2,7 +2,7 @@
 # ICMP tunnel Configuration Script
 # Author: github.com/Azumi67
 # This is for educational use and my own learning, please provide me with feedback if possible
-# There maybe some erros , please forgive me as i have worked on it while i was studying.
+# There may be some mistakes, please forgive me as I worked on it during my studies.
 # This script is designed to simplify the configuration of ICMP Tunnel.
 #
 # Supported operating systems: Ubuntu 20, Debian 12
@@ -1110,7 +1110,10 @@ def iran_tcp_menu():
 
     with open("/root/frp/frps.toml", "w") as f:
         f.write("[common]\n")
-        f.write("bind_port = 443\n")
+        bind_port = input("\033[93mEnter \033[92mTunnel Port\033[93m (default 443): \033[0m")
+        if not bind_port:
+            bind_port = "443"
+        f.write("bind_port = {}\n".format(bind_port))
         f.write("authentication_mode = token\n")
         f.write("token = azumichwan\n")
         f.write("\n")
@@ -1174,7 +1177,10 @@ def kharej_tcp_menu():
     with open(frpc_ini_path, "w") as f:
         f.write("[common]\n")
         f.write("server_addr = {}\n".format(iran_ipv6))
-        f.write("server_port = 443\n")
+        server_port = input("\033[93mEnter \033[92mTunnel port\033[93m (default 443): \033[0m")
+        if not server_port:
+            server_port = "443"
+        f.write("server_port = {}\n".format(server_port))
         f.write("authentication_mode = token\n")
         f.write("token = azumichwan\n")
 
@@ -1458,7 +1464,10 @@ def kharejj_tcp_menu():
     with open(frpc_ini_path, "w") as f:
         f.write("[common]\n")
         f.write("server_addr = {}\n".format(iran_ipv6))
-        f.write("server_port = 443\n")
+        server_port = input("\033[93mEnter \033[92mTunnel port\033[93m (default 443): \033[0m")
+        if not server_port:
+            server_port = "443"
+        f.write("server_port = {}\n".format(server_port))
         f.write("authentication_mode = token\n")
         f.write("token = azumichwan\n")
 
@@ -1618,7 +1627,10 @@ def iran_udp_menu():
 
     with open("/root/frp/frps.toml", "w") as f:
         f.write("[common]\n")
-        f.write("bind_port = 443\n")
+        bind_port = input("\033[93mEnter \033[92mTunnel Port\033[93m (default 443): \033[0m")
+        if not bind_port:
+            bind_port = "443"
+        f.write("bind_port = {}\n".format(bind_port))
         f.write("authentication_mode = token\n")
         f.write("token = azumichwan\n")
         f.write("\n")
@@ -1682,7 +1694,10 @@ def kharej_udp_menu():
     with open(frpc_ini_path, "w") as f:
         f.write("[common]\n")
         f.write("server_addr = {}\n".format(iran_ipv6))
-        f.write("server_port = 443\n")
+        server_port = input("\033[93mEnter \033[92mTunnel port\033[93m (default 443): \033[0m")
+        if not server_port:
+            server_port = "443"
+        f.write("server_port = {}\n".format(server_port))
         f.write("authentication_mode = token\n")
         f.write("token = azumichwan\n")
 
@@ -1893,7 +1908,10 @@ def kharejj_udp_menu():
     with open(frpc_ini_path, "w") as f:
         f.write("[common]\n")
         f.write("server_addr = {}\n".format(iran_ipv6))
-        f.write("server_port = 443\n")
+        server_port = input("\033[93mEnter \033[92mTunnel port\033[93m (default 443): \033[0m")
+        if not server_port:
+            server_port = "443"
+        f.write("server_port = {}\n".format(server_port))
         f.write("authentication_mode = token\n")
         f.write("token = azumichwan\n")
 
@@ -2520,6 +2538,7 @@ def udp_ipv4_iran():
     if num_configs == 1:
         server_subdomain = input("\033[93mEnter \033[92mKharej\033[93m IPV4:\033[0m ")
         server_port = input("\033[93mEnter \033[92mKharej Config\033[93m port:\033[0m ")
+        local_port = input("\033[93mEnter \033[92mlocal port\033[93m (default: 443) - \033[96m[This is your New port]\033[93m:\033[0m ") or '443'
         stop_n_remove_service("kharej-pingtunnel-1")
         stop_n_remove_service("iran-pingtunnel-1")
         key = 16370 + i
@@ -2529,7 +2548,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
+ExecStart=/root/./pingtunnel -type client -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2547,7 +2566,7 @@ WantedBy=multi-user.target
 
         if current_ipv4:
             print("\033[93m╭─────────────────────────────────────────────────────────╮\033[0m")
-            print(f"\033[93m| Your Address & Port: {current_ipv4} : 443  \033[0m")
+            print(f"\033[93m| Your Address & Port: {current_ipv4} : {local_port}  \033[0m")
             print("\033[93m╰─────────────────────────────────────────────────────────╯\033[0m")
         else:
             display_error("\033[91mUnable to retrieve server's IPv4 address.\033[0m")
@@ -2607,6 +2626,7 @@ def udp_ipv6_iran():
         server_subdomain = input("\033[93mEnter \033[92mKharej\033[93m IPV4:\033[0m ")
         server_subdomain2 = input("\033[93mEnter \033[92mKharej\033[96m IPV6\033[93m: \033[0m")
         server_port = input("\033[93mEnter \033[92mKharej Config\033[93m port:\033[0m ")
+        local_port = input("\033[93mEnter \033[92mlocal port\033[93m (default: 443) - \033[96m[This is your New port]\033[93m:\033[0m ") or '443'
         stop_n_remove_service("kharej-pingtunnel-1")
         stop_n_remove_service("iran-pingtunnel-1")
         key = 16370 + i
@@ -2616,7 +2636,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {[server_subdomain2]}:{server_port} -key {key} -noprint 1 -nolog 1 
+ExecStart=/root/./pingtunnel -type client -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2634,7 +2654,7 @@ WantedBy=multi-user.target
 
         if current_ipv4:
             print("\033[93m╭─────────────────────────────────────────────────────────╮\033[0m")
-            print(f"\033[93m| Your Address & Port: {current_ipv4} : 443  \033[0m")
+            print(f"\033[93m| Your Address & Port: {current_ipv4} : {local_port}  \033[0m")
             print("\033[93m╰─────────────────────────────────────────────────────────╯\033[0m")
         else:
             display_error("\033[91mUnable to retrieve server's IPv4 address.\033[0m")
@@ -2696,16 +2716,17 @@ def tcp_ipv4_iran():
     if num_configs == 1:
         server_subdomain = input("\033[93mEnter \033[92mKharej\033[93m IPV4:\033[0m ")
         server_port = input("\033[93mEnter \033[92mKharej Config\033[93m port:\033[0m ")
+        local_port = input("\033[93mEnter \033[92mlocal port\033[93m (default: 443) - \033[96m[This is your New port]\033[93m:\033[0m ") or '443'
         stop_n_remove_service("kharej-pingtunnel-1")
         stop_n_remove_service("iran-pingtunnel-1")
-        key = 16370 + num_configs - 1
+        key = 16370 + i
 
         service_content = f'''[Unit]
 Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
+ExecStart=/root/./pingtunnel -type client -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2723,7 +2744,7 @@ WantedBy=multi-user.target
 
         if current_ipv4:
             print("\033[93m╭─────────────────────────────────────────────────────────╮\033[0m")
-            print(f"\033[93m| Your Address & Port: {current_ipv4} : 443  \033[0m")
+            print(f"\033[93m| Your Address & Port: {current_ipv4} : {local_port}  \033[0m")
             print("\033[93m╰─────────────────────────────────────────────────────────╯\033[0m")
         else:
             display_error("\033[91mUnable to retrieve server's IPv4 address.\033[0m")
@@ -2782,16 +2803,17 @@ def tcp_ipv6_iran():
         server_subdomain = input("\033[93mEnter \033[92mKharej\033[93m IPV4:\033[0m ")
         server_subdomain2 = input("\033[93mEnter \033[92mKharej\033[96m IPV6\033[93m: \033[0m")
         server_port = input("\033[93mEnter \033[92mKharej Config\033[93m port:\033[0m ")
+        local_port = input("\033[93mEnter \033[92mlocal port\033[93m (default: 443) - \033[96m[This is your New port]\033[93m:\033[0m ") or '443'
         stop_n_remove_service("kharej-pingtunnel-1")
         stop_n_remove_service("iran-pingtunnel-1")
-        key = 16370 + num_configs - 1
+        key = 16370 + i
 
         service_content = f'''[Unit]
 Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :443 -s {server_subdomain} -t {[server_subdomain2]}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
+ExecStart=/root/./pingtunnel -type client -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2809,7 +2831,7 @@ WantedBy=multi-user.target
 
         if current_ipv4:
             print("\033[93m╭─────────────────────────────────────────────────────────╮\033[0m")
-            print(f"\033[93m| Your Address & Port: {current_ipv4} : 443  \033[0m")
+            print(f"\033[93m| Your Address & Port: {current_ipv4} : {local_port}  \033[0m")
             print("\033[93m╰─────────────────────────────────────────────────────────╯\033[0m")
         else:
             display_error("\033[91mUnable to retrieve server's IPv4 address.\033[0m")
@@ -2889,7 +2911,7 @@ def icmp_choose():
     print("\033[93m╭───────────────────────────────────────╮\033[0m")
     print('\033[93mChoose what to do:\033[0m')
     print('1. \033[92mSocat Single config \033[0m')
-    print('2. \033[93mHaproxy Mutli config[0m')
+    print('2. \033[96mHaproxy Mutli config\033[0m')
     print("\033[93m╰───────────────────────────────────────╯\033[0m")
 
     while True:
@@ -3006,8 +3028,9 @@ def haproxy_icmp():
     config_parts.append("    errorfile 503 /etc/haproxy/errors/503.http")
     config_parts.append("    errorfile 504 /etc/haproxy/errors/504.http")
     config_parts.append("")
-    config_parts.append("frontend ip_iran")
-    config_parts.append(f"    bind *:443 transparent")
+    frontend_bind = input("\033[93mEnter \033[92mHaproxy Port\033[93m (default: *:443):\033[0m ") or "*:443"
+    config_parts.append(f"frontend ip_iran")
+    config_parts.append(f"    bind *:{frontend_bind} transparent")
     config_parts.append("    mode tcp")
     config_parts.append("    default_backend kharej")
     config_parts.append("")
@@ -3028,7 +3051,7 @@ def haproxy_icmp():
 
     if current_ipv4:
         print("\033[93m╭─────────────────────────────────────────────────────────╮\033[0m")
-        print(f"\033[93m| Your Address & Port: {current_ipv4} : 443  \033[0m")
+        print(f"\033[93m| Your Address & Port: {current_ipv4} : {frontend_bind}  \033[0m")
         print("\033[93m╰─────────────────────────────────────────────────────────╯\033[0m")
 
     return haproxy_config
@@ -3128,7 +3151,7 @@ def hans_choose():
     print("\033[93m╭───────────────────────────────────────╮\033[0m")
     print('\033[93mChoose what to do:\033[0m')
     print('1. \033[92mSocat Single config \033[0m')
-    print('2. \033[93mHaproxy Mutli config[0m')
+    print('2. \033[96mHaproxy Mutli config\033[0m')
     print("\033[93m╰───────────────────────────────────────╯\033[0m")
 
     while True:
@@ -3237,8 +3260,9 @@ def haproxy_hans():
     config_parts.append("    errorfile 503 /etc/haproxy/errors/503.http")
     config_parts.append("    errorfile 504 /etc/haproxy/errors/504.http")
     config_parts.append("")
-    config_parts.append("frontend ip4_iran")
-    config_parts.append(f"    bind *:443 transparent")
+    frontend_bind = input("\033[93mEnter \033[92mHaproxy Port\033[93m (default: 443):\033[0m ") or "*:443"
+    config_parts.append(f"frontend ip_iran")
+    config_parts.append(f"    bind *:{frontend_bind} transparent")
     config_parts.append("    mode tcp")
     config_parts.append("    default_backend kharej")
     config_parts.append("")
@@ -3259,7 +3283,7 @@ def haproxy_hans():
 
     if current_ipv4:
         print("\033[93m╭─────────────────────────────────────────────────────────╮\033[0m")
-        print(f"\033[93m| Your Address & Port: {current_ipv4} : 443  \033[0m")
+        print(f"\033[93m| Your Address & Port: {current_ipv4} : {frontend_bind}  \033[0m")
         print("\033[93m╰─────────────────────────────────────────────────────────╯\033[0m")
 
     return haproxy_config    
