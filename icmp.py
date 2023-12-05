@@ -1039,8 +1039,6 @@ def frp_menu():
         display_error("\033[91mInstallation process interrupted.\033[0m")
         exit(1)
 
-    with open('/etc/resolv.conf', 'w') as resolv_file:
-        resolv_file.write("nameserver 8.8.8.8\n")
 
     arch = subprocess.check_output('uname -m', shell=True).decode().strip()
 
@@ -1257,7 +1255,6 @@ def hanss_install_menu():
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     display_loading()
 
-    subprocess.run(["echo", "'nameserver 8.8.8.8'", ">", "/etc/resolv.conf"], stderr=subprocess.DEVNULL, check=True, shell=True)
 
     ipv4_forward_status = subprocess.run(["sysctl", "-n", "net.ipv4.ip_forward"], capture_output=True, text=True)
     if int(ipv4_forward_status.stdout) != 1:
@@ -1412,7 +1409,6 @@ def install_icmp():
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     display_loading()
 
-    subprocess.run(['sudo', 'tee', '/etc/resolv.conf'], input='nameserver 8.8.8.8\n', capture_output=True, text=True)
 
     ipv4_forward_status = subprocess.run(["sysctl", "-n", "net.ipv4.ip_forward"], capture_output=True, text=True)
     if int(ipv4_forward_status.stdout) != 1:
@@ -2335,14 +2331,11 @@ def ignore():
     if "net.ipv6.conf.all.forwarding = 0" not in ipv6_forward_status.stdout:
         subprocess.run(["sudo", "sysctl", "-w", "net.ipv6.conf.all.forwarding=1"])
 
-    subprocess.run(["sudo", "sh", "-c", "echo 'nameserver 8.8.8.8' > /etc/resolv.conf"])
 
 def install_pingtunnel():
     display_notification("\033[93mInstalling PingTunnel ...\033[0m")
     print("\033[93m──────────────────────────────────────────────────\033[94m")
     
-    subprocess.run(["sudo", "cp", "/etc/resolv.conf", "/etc/resolv.conf.bak"])
-    subprocess.run(["sudo", "bash", "-c", 'echo "nameserver 8.8.8.8" > /etc/resolv.conf'])
     
     subprocess.run(["sudo", "apt", "install", "wget", "zip", "-y"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     
