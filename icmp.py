@@ -1256,21 +1256,23 @@ def hanss_install_menu():
     display_notification("\033[93mInstalling \033[92mHans\033[93m ...\033[0m")
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     display_loading()
-    
+
     subprocess.run(["echo", "'nameserver 8.8.8.8'", ">", "/etc/resolv.conf"], stderr=subprocess.DEVNULL, check=True, shell=True)
 
     ipv4_forward_status = subprocess.run(["sysctl", "-n", "net.ipv4.ip_forward"], capture_output=True, text=True)
     if int(ipv4_forward_status.stdout) != 1:
         subprocess.run(["sysctl", "net.ipv4.ip_forward=1"])
 
+    subprocess.run(["sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
 
     subprocess.run(["wget", "https://sourceforge.net/projects/hanstunnel/files/source/hans-1.1.tar.gz"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     subprocess.run(["tar", "-xzf", "hans-1.1.tar.gz"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     os.chdir("/root/hans-1.1")
 
-    subprocess.run(["apt", "install", "-y", "make"], check=True)  
-    subprocess.run(["apt", "install", "-y", "g++"], check=True)  
-    subprocess.run(["make"], check=True)  
+    subprocess.run(["apt", "install", "-y", "make"], check=True)
+    subprocess.run(["apt", "install", "-y", "g++"], check=True)
+    subprocess.run(["make"], check=True)
 
     display_checkmark("\033[92mHans installed successfully!\033[0m")
 
@@ -1412,14 +1414,15 @@ def install_icmp():
 
     subprocess.run(['sudo', 'tee', '/etc/resolv.conf'], input='nameserver 8.8.8.8\n', capture_output=True, text=True)
 
-
     ipv4_forward_status = subprocess.run(["sysctl", "-n", "net.ipv4.ip_forward"], capture_output=True, text=True)
     if int(ipv4_forward_status.stdout) != 1:
         subprocess.run(["sysctl", "net.ipv4.ip_forward=1"])
 
+    subprocess.run(["sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+
     if os.path.exists("/root/icmptunnel"):
         shutil.rmtree("/root/icmptunnel")
-
 
     clone_command = 'git clone https://github.com/jamesbarlow/icmptunnel.git icmptunnel'
     clone_result = os.system(clone_command)
@@ -1427,20 +1430,15 @@ def install_icmp():
         print("Error: Failed to clone Repo.")
         return
 
-
     if os.path.exists("/root/icmptunnel"):
-
         os.chdir("/root/icmptunnel")
-
 
         subprocess.run(['sudo', 'apt', 'install', '-y', 'net-tools'], capture_output=True, text=True)
         subprocess.run(['sudo', 'apt', 'install', '-y', 'make'], capture_output=True, text=True)
         subprocess.run(['sudo', 'apt-get', 'install', '-y', 'libssl-dev'], capture_output=True, text=True)
         subprocess.run(['sudo', 'apt', 'install', '-y', 'g++'], capture_output=True, text=True)
 
-
         subprocess.run(['make'], capture_output=True, text=True)
-
 
         os.chdir("..")
     else:
