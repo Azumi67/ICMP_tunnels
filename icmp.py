@@ -145,6 +145,7 @@ def main_menu():
             print(footer)
             print(border)
             print("0. \033[91mServices Status\033[0m")
+            print("00. \033[93mIncrease Limit[Optional]\033[0m")
             print("1. \033[96mAdd Native IPV6\033[0m")
             print("2. \033[92mPingTunnel ICMP\033[0m")
             print("3. \033[93mIcmptunnel\033[0m")
@@ -157,9 +158,10 @@ def main_menu():
             print("\033[93m╰─────────────────────────────────────────────────────────────────────╯\033[0m")
 
             choice = input("\033[5mEnter your choice Please: \033[0m")
-            print("choice:", choice)
             if choice == '0':
                 status_menu()
+            elif choice == '00':
+                up_up()
             elif choice == '1':
                 Native_menu()
             elif choice == '2':
@@ -187,6 +189,49 @@ def main_menu():
     except KeyboardInterrupt:
         display_error("\033[91m\nProgram interrupted. Exiting...\033[0m")
         sys.exit()
+        
+def up_up():
+    ulimit_setting = 'ulimit -n 65535'
+    bashrc_path = os.path.expanduser('~/.bashrc')
+
+    with open(bashrc_path, 'r') as f:
+        existing_bashrc = f.read()
+
+    if ulimit_setting not in existing_bashrc:
+        with open(bashrc_path, 'a') as f:
+            f.write('\n')
+            f.write(ulimit_setting)
+            f.write('\n')
+
+    sysctl_conf_path = '/etc/sysctl.conf'
+    sysctl_params = [
+        'net.core.rmem_max=26214400',
+        'net.core.rmem_default=26214400',
+        'net.core.wmem_max=26214400',
+        'net.core.wmem_default=26214400',
+        'net.core.netdev_max_backlog=2048'
+    ]
+
+    with open(sysctl_conf_path, 'r') as f:
+        existing_sysctl_conf = f.read()
+
+    params_to_add = []
+    for param in sysctl_params:
+        if param not in existing_sysctl_conf:
+            params_to_add.append(param)
+
+    if params_to_add:
+        with open(sysctl_conf_path, 'a') as f:
+            f.write('\n')
+            f.write('\n'.join(params_to_add))
+            f.write('\n')
+        try:
+            subprocess.run(["sudo", "sysctl", "-p"], stderr=subprocess.DEVNULL, check=True)
+            display_checkmark("\033[92mIt is Done!\033[0m")
+        except subprocess.CalledProcessError:
+            print("\033[91mAn error occurred while setting it up.\033[0m")
+    else:
+        display_checkmark("\033[92mIt was already Done.\033[0m")
         
 def status_menu():
     os.system("clear")
@@ -1260,8 +1305,8 @@ def hanss_install_menu():
     if int(ipv4_forward_status.stdout) != 1:
         subprocess.run(["sysctl", "net.ipv4.ip_forward=1"])
 
-    subprocess.run(["sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
-    subprocess.run(["sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
 
     subprocess.run(["wget", "https://sourceforge.net/projects/hanstunnel/files/source/hans-1.1.tar.gz"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     subprocess.run(["tar", "-xzf", "hans-1.1.tar.gz"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
@@ -1414,8 +1459,8 @@ def install_icmp():
     if int(ipv4_forward_status.stdout) != 1:
         subprocess.run(["sysctl", "net.ipv4.ip_forward=1"])
 
-    subprocess.run(["sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
-    subprocess.run(["sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
 
     if os.path.exists("/root/icmptunnel"):
         shutil.rmtree("/root/icmptunnel")
@@ -2408,6 +2453,8 @@ def ipv4_kharej():
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
     ignore()
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     local_ports = []
 
@@ -2447,6 +2494,8 @@ def ipv6_kharej():
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
     ignore()
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     local_ports = []
 
@@ -2523,6 +2572,8 @@ def udp_ipv4_iran():
         install_pingtunnel()
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     ignore()
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     i = 0 
     
@@ -2539,7 +2590,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
+ExecStart=/root/./pingtunnel -type client -tcp_mw 3000 -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2578,7 +2629,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key}  -noprint 1 -nolog 1 
+ExecStart=/root/./pingtunnel -type client -tcp_mw 3000 -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key}  -noprint 1 -nolog 1 
 
 [Install]
 WantedBy=multi-user.target
@@ -2610,6 +2661,8 @@ def udp_ipv6_iran():
         install_pingtunnel()
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     ignore()
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     i = 0 
     
@@ -2627,7 +2680,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
+ExecStart=/root/./pingtunnel -type client -tcp_mw 3000 -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2668,7 +2721,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
+ExecStart=/root/./pingtunnel -type client -tcp_mw 3000 -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2701,6 +2754,8 @@ def tcp_ipv4_iran():
     if not os.path.exists("/root/pingtunnel"):
         install_pingtunnel()
     ignore()
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     i = 0  
 
@@ -2717,7 +2772,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
+ExecStart=/root/./pingtunnel -type client -tcp_mw 3000 -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2755,7 +2810,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
+ExecStart=/root/./pingtunnel -type client -tcp_mw 3000 -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
 Restart=always
 
 [Install]
@@ -2788,6 +2843,8 @@ def tcp_ipv6_iran():
         install_pingtunnel()
     print("\033[93m──────────────────────────────────────────────────\033[0m")
     ignore()
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.rmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
+    subprocess.run(["sudo", "sysctl", "-w", "net.core.wmem_max=2500000"], stderr=subprocess.DEVNULL, check=True)
     num_configs = int(input("\033[93mEnter the \033[92mnumber\033[93m of \033[96mconfigurations\033[93m:\033[0m "))
     i = 0 
     if num_configs == 1:
@@ -2804,7 +2861,7 @@ Description=Pingtunnel Service 1
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -key {key} -noprint 1 -nolog 1 
+ExecStart=/root/./pingtunnel -type client -tcp_mw 3000 -l :{local_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 
 Restart=always
 
 [Install]
@@ -2845,7 +2902,7 @@ Description=Pingtunnel Service {i+1}
 After=network.target
 
 [Service]
-ExecStart=/root/./pingtunnel -type client -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
+ExecStart=/root/./pingtunnel -type client -tcp_mw 3000 -l :{server_port} -s {server_subdomain} -t {server_subdomain}:{server_port} -tcp 1 -key {key} -noprint 1 -nolog 1 -tcp_mw 3000
 
 [Install]
 WantedBy=multi-user.target
