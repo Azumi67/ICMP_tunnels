@@ -237,7 +237,7 @@ def status_menu():
     os.system("clear")
     print('\033[92m ^ ^\033[0m')
     print('\033[92m(\033[91mO,O\033[92m)\033[0m')
-    print('\033[92m(   ) \033[93mUninstall Menu\033[0m')
+    print('\033[92m(   ) \033[93mStatus Menu\033[0m')
     print('\033[92m "-"\033[93m══════════════════════════\033[0m')
     print("\033[93m╭───────────────────────────────────────╮\033[0m")
     print('\033[93mChoose what to do:\033[0m')
