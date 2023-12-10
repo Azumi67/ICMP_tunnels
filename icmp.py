@@ -686,12 +686,13 @@ def remove_hans_tcp():
 def remove_icmp():
     os.system("clear")
     display_notification("\033[93mRemoving icmptunnel...\033[0m")
-    print("\033[93m╭───────────────────────────────────────╮\033[0m")
+    print("\033[93m───────────────────────────────────────\033[0m")
     reset_icmp()
     try:
         subprocess.run("crontab -l | grep -v \"@reboot /bin/bash /etc/icmp.sh\" | crontab -", shell=True)
+        subprocess.run("crontab -l | grep -v \"@reboot /bin/bash /etc/icmp-iran.sh\" | crontab -", shell=True)
         subprocess.run("ip link set dev tun0 down > /dev/null", shell=True)
-
+        subprocess.run("ip link set dev tun1 down > /dev/null", shell=True)
         subprocess.run("systemctl daemon-reload", shell=True)
 
         print("Progress: ", end="")
@@ -710,11 +711,13 @@ def remove_icmp():
             print("Error: Directory '/root/icmptunnel' does not exist.")
 
         subprocess.run("crontab -l | grep -v \"/bin/bash /etc/icmp.sh\" | crontab -", shell=True)
-
+        subprocess.run("crontab -l | grep -v \"/bin/bash /etc/icmp-iran.sh\" | crontab -", shell=True)
         display_checkmark("\033[92mUninstall completed!\033[0m")
 
         if os.path.isfile("/etc/icmp.sh"):
             os.remove("/etc/icmp.sh")
+        if os.path.isfile("/etc/icmp-iran.sh"):
+            os.remove("/etc/icmp-iran.sh")
     except subprocess.CalledProcessError as e:
         print("Error:", e.output.decode().strip())
         
