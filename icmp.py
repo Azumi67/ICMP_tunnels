@@ -30,6 +30,9 @@ import shutil
 import netifaces as ni
 import urllib.request
 import zipfile
+import io
+
+sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8', errors='replace')
 
 
 if os.geteuid() != 0:
