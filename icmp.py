@@ -1204,7 +1204,8 @@ WantedBy=multi-user.target
     display_notification("\033[93mStarting FRP service...\033[0m")
     os.system("systemctl daemon-reload")
     os.system("systemctl enable {}".format(service_name))
-    os.system("systemctl start {}".format(service_name))
+    os.system("sudo chmod u+x /etc/systemd/system/{}.service".format(service_name))
+    os.system("systemctl restart {}".format(service_name))
 
     display_checkmark("\033[92mFRP Service Started!\033[0m")
 
@@ -1268,8 +1269,9 @@ def kharej_tcp_menu():
 
     os.system("systemctl daemon-reload")
     os.system("systemctl enable azumifrpc1")
+    os.system("sudo chmod u+x /etc/systemd/system/azumifrpc1.service")
     display_notification("\033[93mStarting FRP service...\033[0m")
-    os.system("systemctl start azumifrpc1")
+    os.system("systemctl restart azumifrpc1")
 
     display_checkmark("\033[92mFRP Service Started!\033[0m") 
     
@@ -1551,8 +1553,9 @@ def kharejj_tcp_menu():
 
     os.system("systemctl daemon-reload")
     os.system("systemctl enable azumifrpc1")
+    os.system("sudo chmod u+x /etc/systemd/system/azumifrpc1.service")
     display_notification("\033[93mStarting FRP service...\033[0m")
-    os.system("systemctl start azumifrpc1")
+    os.system("systemctl restart azumifrpc1")
 
     display_checkmark("\033[92mFRP Service Started!\033[0m") 
     
@@ -1717,7 +1720,8 @@ WantedBy=multi-user.target
     display_notification("\033[93mStarting FRP service...\033[0m")
     os.system("systemctl daemon-reload")
     os.system("systemctl enable {}".format(service_name))
-    os.system("systemctl start {}".format(service_name))
+    os.system("sudo chmod u+x /etc/systemd/system/{}.service".format(service_name))
+    os.system("systemctl restart {}".format(service_name))
 
     display_checkmark("\033[92mFRP Service Started!\033[0m")
 
@@ -1781,8 +1785,9 @@ def kharej_udp_menu():
 
     os.system("systemctl daemon-reload")
     os.system("systemctl enable azumifrpc1")
+    os.system("sudo chmod u+x /etc/systemd/system/azumifrpc1.service")
     display_notification("\033[93mStarting FRP service...\033[0m")
-    os.system("systemctl start azumifrpc1")
+    os.system("systemctl restart azumifrpc1")
 
     display_checkmark("\033[92mFRP Service Started!\033[0m") 
 	
@@ -1995,8 +2000,9 @@ def kharejj_udp_menu():
 
     os.system("systemctl daemon-reload")
     os.system("systemctl enable azumifrpc1")
+    os.system("sudo chmod u+x /etc/systemd/system/azumifrpc1.service")
     display_notification("\033[93mStarting FRP service...\033[0m")
-    os.system("systemctl start azumifrpc1")
+    os.system("systemctl restart azumifrpc1")
 
     display_checkmark("\033[92mFRP Service Started!\033[0m") 
     
@@ -2488,7 +2494,8 @@ WantedBy=multi-user.target
 
         subprocess.run('systemctl daemon-reload', shell=True)
         subprocess.run(f'sudo systemctl enable kharej-pingtunnel-{i+1}', shell=True)
-        subprocess.run(f'sudo systemctl start kharej-pingtunnel-{i+1}', shell=True)
+        subprocess.run(f'sudo chmod u+x /etc/systemd/system/kharej-pingtunnel-{i+1}.service', shell=True)
+        subprocess.run(f'sudo systemctl restart kharej-pingtunnel-{i+1}', shell=True)
 
     display_checkmark("\033[92mConfiguration completed!\033[0m")
 
@@ -2529,7 +2536,8 @@ WantedBy=multi-user.target
 
         subprocess.run('systemctl daemon-reload', shell=True)
         subprocess.run(f'sudo systemctl enable kharej-pingtunnel-{i+1}', shell=True)
-        subprocess.run(f'sudo systemctl start kharej-pingtunnel-{i+1}', shell=True)
+        subprocess.run(f'sudo chmod u+x /etc/systemd/system/kharej-pingtunnel-{i+1}.service', shell=True)
+        subprocess.run(f'sudo systemctl restart kharej-pingtunnel-{i+1}', shell=True)
 
     display_checkmark("\033[92mConfiguration completed!\033[0m")
         
@@ -2608,7 +2616,8 @@ WantedBy=multi-user.target
 
         subprocess.run('systemctl daemon-reload', shell=True)
         subprocess.run('sudo systemctl enable iran-pingtunnel-1', shell=True)
-        subprocess.run('sudo systemctl start iran-pingtunnel-1', shell=True)
+        subprocess.run('sudo chmod u+x /etc/systemd/system/iran-pingtunnel-1.service', shell=True)
+        subprocess.run('sudo systemctl restart iran-pingtunnel-1', shell=True)
         display_checkmark("\033[92mConfiguration completed!\033[0m")
         current_ipv4 = get_ipv4()
 
@@ -2646,7 +2655,8 @@ WantedBy=multi-user.target
 
             subprocess.run('systemctl daemon-reload', shell=True)
             subprocess.run(f'sudo systemctl enable iran-pingtunnel-{i+1}', shell=True)
-            subprocess.run(f'sudo systemctl start iran-pingtunnel-{i+1}', shell=True)
+            subprocess.run(f'sudo chmod u+x /etc/systemd/system/iran-pingtunnel-{i+1}.service', shell=True)
+            subprocess.run(f'sudo systemctl restart iran-pingtunnel-{i+1}', shell=True)
 
         display_checkmark("\033[92mConfiguration completed!\033[0m")
         current_ipv4 = get_ipv4()
@@ -2698,7 +2708,8 @@ WantedBy=multi-user.target
 
         subprocess.run('systemctl daemon-reload', shell=True)
         subprocess.run('sudo systemctl enable iran-pingtunnel-1', shell=True)
-        subprocess.run('sudo systemctl start iran-pingtunnel-1', shell=True)
+        subprocess.run('sudo chmod u+x /etc/systemd/system/iran-pingtunnel-1.service', shell=True)
+        subprocess.run('sudo systemctl restart iran-pingtunnel-1', shell=True)
         display_checkmark("\033[92mConfiguration completed!\033[0m")
         current_ipv4 = get_ipv4()
 
@@ -2739,7 +2750,8 @@ WantedBy=multi-user.target
 
             subprocess.run('systemctl daemon-reload', shell=True)
             subprocess.run(f'sudo systemctl enable iran-pingtunnel-{i+1}', shell=True)
-            subprocess.run(f'sudo systemctl start iran-pingtunnel-{i+1}', shell=True)
+            subprocess.run('sudo chmod u+x /etc/systemd/system/iran-pingtunnel-{i+1}.service', shell=True)
+            subprocess.run(f'sudo systemctl restart iran-pingtunnel-{i+1}', shell=True)
 
         display_checkmark("\033[92mConfiguration completed!\033[0m")
         current_ipv4 = get_ipv4()
@@ -2790,7 +2802,8 @@ WantedBy=multi-user.target
 
         subprocess.run('systemctl daemon-reload', shell=True)
         subprocess.run('sudo systemctl enable iran-pingtunnel-1', shell=True)
-        subprocess.run('sudo systemctl start iran-pingtunnel-1', shell=True)
+        subprocess.run('sudo chmod u+x /etc/systemd/system/iran-pingtunnel-1.service', shell=True)
+        subprocess.run('sudo systemctl restart iran-pingtunnel-1', shell=True)
         display_checkmark("\033[92mConfiguration completed!\033[0m")
         current_ipv4 = get_ipv4()
 
@@ -2828,7 +2841,8 @@ WantedBy=multi-user.target
 
             subprocess.run('systemctl daemon-reload', shell=True)
             subprocess.run(f'sudo systemctl enable iran-pingtunnel-{i+1}', shell=True)
-            subprocess.run(f'sudo systemctl start iran-pingtunnel-{i+1}', shell=True)
+            subprocess.run(f'sudo chmod u+x /etc/systemd/system/iran-pingtunnel-{i+1}.service', shell=True)
+            subprocess.run(f'sudo systemctl restart iran-pingtunnel-{i+1}', shell=True)
 
         display_checkmark("\033[92mConfiguration completed!\033[0m")
         current_ipv4 = get_ipv4()
@@ -2879,7 +2893,8 @@ WantedBy=multi-user.target
 
         subprocess.run('systemctl daemon-reload', shell=True)
         subprocess.run('sudo systemctl enable iran-pingtunnel-1', shell=True)
-        subprocess.run('sudo systemctl start iran-pingtunnel-1', shell=True)
+        subprocess.run('sudo chmod u+x /etc/systemd/system/iran-pingtunnel-1.service', shell=True)
+        subprocess.run('sudo systemctl restart iran-pingtunnel-1', shell=True)
         display_checkmark("\033[92mConfiguration completed!\033[0m")
         current_ipv4 = get_ipv4()
 
@@ -2919,7 +2934,8 @@ WantedBy=multi-user.target
 
             subprocess.run('systemctl daemon-reload', shell=True)
             subprocess.run(f'sudo systemctl enable iran-pingtunnel-{i+1}', shell=True)
-            subprocess.run(f'sudo systemctl start iran-pingtunnel-{i+1}', shell=True)
+            subprocess.run(f'sudo chmod u+x /etc/systemd/system/iran-pingtunnel-{i+1}.service', shell=True)
+            subprocess.run(f'sudo systemctl restart iran-pingtunnel-{i+1}', shell=True)
 
         display_checkmark("\033[92mConfiguration completed!\033[0m")
         current_ipv4 = get_ipv4()
@@ -3022,7 +3038,8 @@ WantedBy=multi-user.target
 
     os.system("systemctl daemon-reload")
     os.system("sudo systemctl enable portforwarding")
-    os.system("sudo systemctl start portforwarding")
+    os.system("sudo chmod u+x /etc/systemd/system/portforwarding.service")
+    os.system("sudo systemctl restart portforwarding")
     display_checkmark("\033[92mPortforward Completed successfully!\033[0m")
 
     current_ipv4 = get_ipv4()
@@ -3263,7 +3280,8 @@ WantedBy=multi-user.target
 
     os.system("systemctl daemon-reload")
     os.system("sudo systemctl enable portforwarding")
-    os.system("sudo systemctl start portforwarding")
+    os.system("sudo chmod u+x /etc/systemd/system/portforwarding.service")
+    os.system("sudo systemctl restart portforwarding")
     display_checkmark("\033[92mPortforward Completed successfully!\033[0m")
 
     current_ipv4 = get_ipv4()
